@@ -18,6 +18,32 @@
 #ifndef MOD_GRIMTOKENDAILIES_H
 #define MOD_GRIMTOKENDAILIES_H
 
-// Add your shared header declarations here
+#include <cstdint>
+
+struct GrimTokenDailiesConfig
+{
+    bool     Enabled              = true;
+    bool     AnnounceOnLogin      = true;
+
+    // Item entries (must match the SQL base data)
+    uint32_t TokenItemId          = 90000;
+    uint32_t ClassicDutyItemId    = 90001;
+    uint32_t TbcDutyItemId        = 90002;
+
+    // Quest entries
+    uint32_t QuestClassicId       = 210010;
+    uint32_t QuestTbcId           = 210011;
+
+    // NPC entries
+    uint32_t NpcAllianceEntry     = 900100;
+    uint32_t NpcHordeEntry        = 900101;
+
+    // Token reward amounts
+    uint32_t ClassicTokenReward   = 1;
+    uint32_t TbcTokenReward       = 2;
+    uint32_t HeroicTokenReward    = 5;
+};
+
+extern GrimTokenDailiesConfig sGrimTokenDailies;
 
 #endif // MOD_GRIMTOKENDAILIES_H
