@@ -1,0 +1,27 @@
+#
+# mod-GrimTokenDailies Configuration
+#
+
+[worldserver]
+
+########################################
+# mod-GrimTokenDailies Settings
+########################################
+
+#
+#   ModGrimTokenDailies.Enable
+#       Description: Enable or disable the GrimTokenDailies module.
+#       Default:     1 (Enabled)
+#                    0 (Disabled)
+#
+
+ModGrimTokenDailies.Enable = 1
+
+#
+#   ModGrimTokenDailies.Announce.Enable
+#       Description: Announce to players on login that the module is active.
+#       Default:     1 (Enabled)
+#                    0 (Disabled)
+#
+
+ModGrimTokenDailies.Announce.Enable = 1

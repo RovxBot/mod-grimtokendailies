@@ -1,0 +1,10 @@
+-- --------------------------------------------------------
+-- mod-GrimTokenDailies - World Database
+-- --------------------------------------------------------
+-- Place your NPC, quest, and item SQL definitions here.
+--
+-- Examples:
+--   INSERT INTO `creature_template` ...
+--   INSERT INTO `quest_template` ...
+--   INSERT INTO `item_template` ...
+-- --------------------------------------------------------
