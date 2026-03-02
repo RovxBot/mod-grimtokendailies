@@ -64,7 +64,7 @@ class GrimTokenDailies_PlayerScript : public PlayerScript
 public:
     GrimTokenDailies_PlayerScript() : PlayerScript("GrimTokenDailies_PlayerScript") {}
 
-    void OnLogin(Player* player) override
+    void OnPlayerLogin(Player* player) override
     {
         if (!sGrimTokenDailies.Enabled || !sGrimTokenDailies.AnnounceOnLogin)
             return;
