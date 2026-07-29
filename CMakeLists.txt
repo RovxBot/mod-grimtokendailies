@@ -15,7 +15,10 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-set(MOD_GRIMTOKENDAILIES_DIR "${CMAKE_CURRENT_LIST_DIR}")
-
-# Define the C++ source files
-CU_AC_ADD_SCRIPT("${MOD_GRIMTOKENDAILIES_DIR}/src" SKIP_BATCHING)
+# AzerothCore discovers module C++ sources from modules/ itself and generates
+# the static loader from the directory name. Keep this file limited to assets
+# that the core cannot auto-discover, so it works on the Playerbot branch too.
+file(GLOB MOD_GRIMTOKENDAILIES_CONF_FILES "${CMAKE_CURRENT_LIST_DIR}/conf/*.conf.dist")
+foreach(MOD_GRIMTOKENDAILIES_CONF_FILE ${MOD_GRIMTOKENDAILIES_CONF_FILES})
+  install(FILES "${MOD_GRIMTOKENDAILIES_CONF_FILE}" DESTINATION "etc/modules")
+endforeach()
