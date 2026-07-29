@@ -21,6 +21,8 @@ SET @NPC_HORDE           := 900101;
 
 SET @SW_GUARD            := 1423;   -- Stormwind Guard (template to clone)
 SET @ORG_GRUNT           := 3296;   -- Orgrimmar Grunt  (template to clone)
+SET @SHATTRATH_HEROIC_DAILY := 24369; -- Wind Trader Zhareem
+SET @SHATTRATH_NORMAL_DAILY := 24370; -- Nether-Stalker Mah'duun
 
 -- Stormwind spawn
 SET @SW_X     := -8787.98;
@@ -144,6 +146,12 @@ FROM `creature_template`
 WHERE `entry` = @ORG_GRUNT
   AND NOT EXISTS (SELECT 1 FROM `creature_template` WHERE `entry` = @NPC_HORDE);
 
+-- The envoys are available to both factions. Faction 35 is universally friendly,
+-- so neither faction's envoy will aggro opposing-faction players.
+UPDATE `creature_template`
+SET `faction` = 35
+WHERE `entry` IN (@NPC_ALLIANCE, @NPC_HORDE);
+
 -- =========================================================
 -- 4. NPC MODELS  (clone display data from guards)
 -- =========================================================
@@ -225,6 +233,50 @@ SET `map` = 1,
     `orientation` = @ORG_O,
     `wander_distance` = 0
 WHERE `id` = @NPC_HORDE;
+
+-- Alliance spawn — Shattrath Lower City, beside Wind Trader Zhareem
+INSERT INTO `creature`
+  (`id`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`,
+   `position_x`, `position_y`, `position_z`, `orientation`,
+   `spawntimesecs`, `wander_distance`, `currentwaypoint`,
+   `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`,
+   `ScriptName`, `VerifiedBuild`, `CreateObject`, `Comment`)
+SELECT
+  @NPC_ALLIANCE, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`,
+  `position_x` + 2.0, `position_y`, `position_z`, `orientation`,
+  `spawntimesecs`, 0, `currentwaypoint`,
+  `curhealth`, `curmana`, `MovementType`, 0, `unit_flags`, `dynamicflags`,
+  `ScriptName`, `VerifiedBuild`, `CreateObject`, 'Grim Token questgiver (Shattrath Alliance)'
+FROM `creature`
+WHERE `id` = @SHATTRATH_HEROIC_DAILY
+  AND NOT EXISTS (
+    SELECT 1 FROM `creature`
+    WHERE `id` = @NPC_ALLIANCE AND `map` = 530 AND `zoneId` = 3703
+  )
+ORDER BY `guid`
+LIMIT 1;
+
+-- Horde spawn — Shattrath Lower City, beside Nether-Stalker Mah'duun
+INSERT INTO `creature`
+  (`id`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`,
+   `position_x`, `position_y`, `position_z`, `orientation`,
+   `spawntimesecs`, `wander_distance`, `currentwaypoint`,
+   `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`,
+   `ScriptName`, `VerifiedBuild`, `CreateObject`, `Comment`)
+SELECT
+  @NPC_HORDE, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`,
+  `position_x` - 2.0, `position_y`, `position_z`, `orientation`,
+  `spawntimesecs`, 0, `currentwaypoint`,
+  `curhealth`, `curmana`, `MovementType`, 0, `unit_flags`, `dynamicflags`,
+  `ScriptName`, `VerifiedBuild`, `CreateObject`, 'Grim Token questgiver (Shattrath Horde)'
+FROM `creature`
+WHERE `id` = @SHATTRATH_NORMAL_DAILY
+  AND NOT EXISTS (
+    SELECT 1 FROM `creature`
+    WHERE `id` = @NPC_HORDE AND `map` = 530 AND `zoneId` = 3703
+  )
+ORDER BY `guid`
+LIMIT 1;
 
 -- =========================================================
 -- 6. DAILY QUESTS
