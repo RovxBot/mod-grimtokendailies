@@ -20,12 +20,12 @@ An [AzerothCore](https://www.azerothcore.org/) module that adds a **Grim Token**
 
 ### NPCs
 
-Two **Grim Token Envoy** NPCs are spawned (cloned from the local faction guard model):
+Four **Grim Token Envoy** NPCs are spawned (cloned from the local faction guard model):
 
-- **Alliance** – Stormwind (entry 900100)
-- **Horde** – Orgrimmar (entry 900101)
+- **Alliance** – Stormwind and Shattrath's Lower City (entry 900100)
+- **Horde** – Orgrimmar and Shattrath's Lower City (entry 900101)
 
-Both NPCs are quest givers for the Classic and TBC daily quests.
+The Shattrath envoys stand by the existing dungeon-daily quest hub outside World's End Tavern. All envoys use a neutral faction, so they do not aggro either player faction. They are quest givers for the Classic and TBC daily quests.
 
 ### Boss Loot
 
